@@ -36,13 +36,7 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
     public void remove(T element) {
         // Handle null element case
         if (element == null) {
-            for (int i = 0; i < size; i++) {
-                if (elements[i] == null) {
-                    removeAt(i);
-                    return;
-                }
-            }
-            return;
+            throw new IllegalArgumentException("cannot remove null element");
         }
 
         // Regular case for non-null elements
@@ -67,12 +61,7 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
     public boolean contains(T element) {
         // Handle null element case
         if (element == null) {
-            for (int i = 0; i < size; i++) {
-                if (elements[i] == null) {
-                    return true;
-                }
-            }
-            return false;
+            throw new IllegalArgumentException("cannot find null element");
         }
 
         // Regular case for non-null elements
