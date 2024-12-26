@@ -6,6 +6,7 @@ import core.Iterable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<T>, Filterable<T> {
@@ -18,10 +19,56 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
         this.size = 0;
     }
 
+    public CustomArrayList(int initialCapacity) {
+        if (initialCapacity < 0) {
+            throw new IllegalArgumentException("Initial capacity cannot be negative");
+        }
+        this.elements = new Object[initialCapacity];
+        this.size = 0;
+    }
+
     @Override
     public void add(T element) {
+        if (element == null) {
+            throw new IllegalArgumentException("Cannot add null element");
+        }
         ensureCapacity();
         elements[size++] = element;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Optional<T> get(int index) throws IndexOutOfBoundsException{
+        if(index > this.size())
+            throw new IndexOutOfBoundsException("index out of bounds for CustomArrayList of size: " + index);
+
+        return Optional.ofNullable((T)elements[index]);
+    }
+
+    public boolean set(int index, T element) {
+        if (element == null) {
+            return false;
+        }
+
+        if (index < 0 || index >= size) {
+            return false;
+        }
+
+        elements[index] = element;
+        return true;
+    }
+
+    @Override
+    public Optional<Integer> indexOf(T element) {
+        if(element == null)
+            return Optional.empty();
+
+        for(int i = 0; i < this.size(); i++){
+            if(element.equals(elements[i])){
+                return Optional.of(i);
+            }
+        }
+
+        return Optional.empty();
     }
 
     private void ensureCapacity(){
@@ -39,13 +86,9 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
             throw new IllegalArgumentException("cannot remove null element");
         }
 
-        // Regular case for non-null elements
-        for (int i = 0; i < size; i++) {
-            // Only compare if current element is not null
-            if (elements[i] != null && element.equals(elements[i])) {
-                removeAt(i);
-                return;
-            }
+        Optional<Integer> index = this.indexOf(element);
+        if(index.isPresent()){
+            removeAt(index.get());
         }
     }
 
@@ -64,14 +107,7 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
             throw new IllegalArgumentException("cannot find null element");
         }
 
-        // Regular case for non-null elements
-        for (int i = 0; i < size; i++) {
-            // Only compare if current element is not null
-            if (elements[i] != null && element.equals(elements[i])) {
-                return true;
-            }
-        }
-        return false;
+        return indexOf(element).isPresent();
     }
 
     @Override
