@@ -39,7 +39,7 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
     @SuppressWarnings("unchecked")
     public Optional<T> get(int index) throws IndexOutOfBoundsException{
         if(index > this.size())
-            throw new IndexOutOfBoundsException("index out of bounds for CustomArrayList of size: " + index);
+            throw new IndexOutOfBoundsException("index out of bounds for CustomArrayList of size: " + size);
 
         return Optional.ofNullable((T)elements[index]);
     }
@@ -60,7 +60,7 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
     @Override
     public Optional<Integer> indexOf(T element) {
         if(element == null)
-            return Optional.empty();
+            throw new IllegalArgumentException("cannot add null element");
 
         for(int i = 0; i < this.size(); i++){
             if(element.equals(elements[i])){
