@@ -142,7 +142,7 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<T> iterator() throws IllegalStateException, NoSuchElementException{
         return new Iterator<T>() {
             private int currentIndex = 0;
             @Override
@@ -175,5 +175,29 @@ public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<
         Object[] temp = Arrays.copyOf(elements, size);
         Arrays.sort((T[]) temp, 0, size, comparator);
         System.arraycopy(temp, 0, elements, 0, size);
+    }
+
+    @SuppressWarnings("unchecked")
+    public T[] toArray(){
+        return (T[]) Arrays.copyOf(elements, this.size());
+    }
+
+    public void addAll(Collection<T> collection){
+        Iterator<T> iterator = collection.iterator();
+        while(iterator().hasNext()){
+            add(iterator().next());
+        }
+    }
+
+    public CustomArrayList<T> slice(int fromIndex, int toIndex) throws IndexOutOfBoundsException{
+        if(fromIndex < 0 || fromIndex > toIndex || toIndex> this.size()){
+            throw new IndexOutOfBoundsException();
+        }
+
+        CustomArrayList<T> subList = new CustomArrayList<>(toIndex - fromIndex);
+        for (int i = fromIndex; i < toIndex; i++) {
+            subList.add(get(i).get());
+        }
+        return subList;
     }
 }
