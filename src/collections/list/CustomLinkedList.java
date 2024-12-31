@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CustomLinkedList<T> implements Collection<T>, Sortable<T>, Filterable<T>, OrderedCollection<T> {
+public class CustomLinkedList<T> implements List<T>, Collection<T>, Sortable<T>, Filterable<T>, OrderedCollection<T> {
 
     private class Node {
         T data;

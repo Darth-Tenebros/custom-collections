@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CustomArrayList<T> implements Collection<T>, Iterable<T>, Sortable<T>, Filterable<T> {
+public class CustomArrayList<T> implements List<T>, Collection<T>, Iterable<T>, Sortable<T>, Filterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] elements;
     private int size;
