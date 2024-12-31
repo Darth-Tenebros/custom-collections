@@ -15,6 +15,9 @@ public class CustomStack<T> implements Collection<T> {
     }
 
     public Optional<T> pop(){
+        if(store.size() <= 0){
+            return Optional.empty();
+        }
         Optional<T> item = store.get(store.size()-1);
         if(item.isPresent()){
             store.remove(item.get());
@@ -24,6 +27,9 @@ public class CustomStack<T> implements Collection<T> {
     }
 
     public Optional<T> peek(){
+        if(store.size() <= 0){
+            return Optional.empty();
+        }
         return Optional.ofNullable(
                 store.get(store.size()-1).isPresent() ? store.get(store.size()-1).get() : null
         );
