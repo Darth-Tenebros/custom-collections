@@ -1,7 +1,9 @@
 package core;
 
+import java.util.Optional;
+
 public interface Iterator<T> {
     boolean hasNext();
-    T next();
+    Optional<T> next();
     void remove();
 }
