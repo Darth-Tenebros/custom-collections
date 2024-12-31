@@ -20,6 +20,12 @@ public class CustomLinkedList<T> implements List<T>, Collection<T>, Sortable<T>,
         }
     }
 
+    public CustomLinkedList() {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
     private Node head;
     private Node tail;
     private int size;
@@ -80,7 +86,7 @@ public class CustomLinkedList<T> implements List<T>, Collection<T>, Sortable<T>,
     public void addAll(Collection<T> collection) {
         Iterator<T> iterator = collection.iterator();
         while(iterator.hasNext()){
-            add(iterator.next());
+            add(iterator.next().get());
         }
     }
 
@@ -206,13 +212,13 @@ public class CustomLinkedList<T> implements List<T>, Collection<T>, Sortable<T>,
             }
 
             @Override
-            public T next() {
+            public Optional<T> next() {
                 if(!hasNext()){
                     throw new NoSuchElementException("there is no next element");
                 }
                 lastReturned = current;
                 current = current.next;
-                return lastReturned.data;
+                return Optional.of(lastReturned.data);
             }
 
             @Override

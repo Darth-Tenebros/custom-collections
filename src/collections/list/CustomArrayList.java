@@ -152,11 +152,11 @@ public class CustomArrayList<T> implements List<T>, Collection<T>, Iterable<T>, 
 
             @Override
             @SuppressWarnings("unchecked")
-            public T next() {
+            public Optional<T> next() {
                 if(!hasNext()){
                     throw new NoSuchElementException();
                 }
-                return (T) elements[currentIndex++];
+                return Optional.ofNullable((T) elements[currentIndex++]);
             }
 
             @Override
@@ -185,7 +185,7 @@ public class CustomArrayList<T> implements List<T>, Collection<T>, Iterable<T>, 
     public void addAll(Collection<T> collection){
         Iterator<T> iterator = collection.iterator();
         while(iterator().hasNext()){
-            add(iterator().next());
+            add(iterator().next().get());
         }
     }
 
