@@ -84,8 +84,8 @@ public class CustomArrayListTest {
 
         Iterator<String> iterator = list.iterator();
         assertTrue(iterator.hasNext(), "Iterator should have next element");
-        assertEquals("First", iterator.next(), "First element should be correct");
-        assertEquals("Second", iterator.next(), "Second element should be correct");
+        assertEquals("First", iterator.next().get(), "First element should be correct");
+        assertEquals("Second", iterator.next().get(), "Second element should be correct");
 
         iterator.remove();
         assertEquals(2, list.size(), "Size should decrease after iterator remove");
@@ -99,7 +99,7 @@ public class CustomArrayListTest {
         iterator.next();
 
         assertThrows(NoSuchElementException.class, () -> {
-            iterator.next();
+            iterator.next().get();
         }, "Calling next() beyond elements should throw exception");
     }
 
@@ -113,9 +113,9 @@ public class CustomArrayListTest {
         list.sort(Comparator.naturalOrder());
 
         Iterator<String> iterator = list.iterator();
-        assertEquals("Apple", iterator.next(), "First element after sorting should be Apple");
-        assertEquals("Banana", iterator.next(), "Second element after sorting should be Banana");
-        assertEquals("Cherry", iterator.next(), "Third element after sorting should be Cherry");
+        assertEquals("Apple", iterator.next().get(), "First element after sorting should be Apple");
+        assertEquals("Banana", iterator.next().get(), "Second element after sorting should be Banana");
+        assertEquals("Cherry", iterator.next().get(), "Third element after sorting should be Cherry");
     }
 
     @Test
@@ -127,9 +127,9 @@ public class CustomArrayListTest {
         list.sort(Comparator.comparingInt(String::length));
 
         Iterator<String> iterator = list.iterator();
-        assertEquals("Short", iterator.next(), "First element should be shortest");
-        assertEquals("Longer", iterator.next(), "Next element should be next shortest");
-        assertEquals("Longest", iterator.next(), "Last element should be longest");
+        assertEquals("Short", iterator.next().get(), "First element should be shortest");
+        assertEquals("Longer", iterator.next().get(), "Next element should be next shortest");
+        assertEquals("Longest", iterator.next().get(), "Last element should be longest");
     }
 
     // Filtering Tests
